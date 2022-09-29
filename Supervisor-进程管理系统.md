@@ -34,7 +34,7 @@ easy_install supervisor
 >> 注：supervisor的配置文件默认是不全的，不过在大部分默认的情况下，上面说的基本功能已经满足。
 
 #### **子进程配置文件路径：`/etc/supervisord.d/`**
->> 注：默认子进程配置文件为ini格式，可在supervisor主配置文件中修改。
+>> 注：默认子进程配置文件为ini格式，可在supervisor主配置文件中修改。另外：`centos`的配置文件是以`*.ini`格式的
 
 ### 五、配置文件说明
 #### **supervisor.conf配置文件说明：**
