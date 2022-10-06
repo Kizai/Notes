@@ -7,9 +7,7 @@
 - [计算机网络-自顶向下方法第七版](Books/PythonCookbook_Third_Edition_Chinese.pdf)
 - [Docker开发指南](Books/Docker开发指南.pdf)
 - [Docker技术入门与实战](Books/Docker技术入门与实战.pdf)
-- [Docker全攻略](Books/Docker全攻略.pdf)
 - [Redis设计与实现](Books/Redis设计与实现.pdf)
-- [Redis实战](Books/Redis实战.pdf)
 
 ## CCNA
 
