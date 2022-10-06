@@ -13,11 +13,6 @@
   * http://www.dockerinfo.net/document 
   * https://github.com/llitfkitfk/docker-tutorial-cn
 
-### Docker技术书籍：
-* [Docker技术入门与实战](../Docker_Books/Docker技术入门与实战.pdf)
-* [图灵程序设计丛书-Docker开发指南](../Docker_Books/图灵程序设计丛书-Docker开发指南.pdf)
-* [Docker全攻略](../Docker_Books/Docker全攻略.pdf)
-
 ## Docker简介
 Docker 是一个开源的应用容器引擎，而一个容器containers其实是一个虚拟化的独立的环境，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。
 
@@ -52,15 +47,18 @@ Docker是一个虚拟环境容器，可以将你的开发环境、代码、配�
 ## 安装并运行第一个Docker镜像
 * 在Ubuntu系统安装Docker驱动：[官方教程](https://docs.docker.com/engine/install/ubuntu/)
 * 卸载旧版本
+
 ```powershell
 $ sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
-* `apt-get`如果报告没有安装这些软件包，那也没关系。
+
+`apt-get`如果报告没有安装这些软件包，那也没关系。
 
 ### 使用存储库安装
 在新主机上首次安装 Docker Engine 之前，您需要设置 Docker 存储库。之后，您可以从存储库安装和更新 Docker。
 
 1. 更新apt包索引并安装包以允许apt通过 HTTPS 使用存储库：
+
 ```powershell
  $ sudo apt-get update
  $ sudo apt-get install \
@@ -69,12 +67,15 @@ $ sudo apt-get remove docker docker-engine docker.io containerd runc
     gnupg \
     lsb-release
 ```
+
 2. 添加 Docker 的官方 GPG 密钥：
+
 ```powershell
 $ sudo mkdir -p /etc/apt/keyrings
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 3. 使用以下命令设置存储库：
+
 ```powershell
 $  echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
@@ -82,12 +83,14 @@ $  echo \
 ```
 ### 安装 Docker 引擎
 1. 更新apt包索引，安装最新版本的 Docker Engine、containerd 和 Docker Compose，或者进入下一步安装特定版本：
+
 ```powershell
 $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 2. 要安装特定版本的 Docker Engine，请在 repo 中列出可用版本，然后选择并安装：
 一个。列出您的存储库中可用的版本：
+
 ```powershell
 $ apt-cache madison docker-ce
  docker-ce | 5:20.10.17~3-0~ubuntu-focal | https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
@@ -96,6 +99,7 @@ $ apt-cache madison docker-ce
  docker-ce | 5:20.10.14~3-0~ubuntu-focal | https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
  docker-ce | 5:20.10.13~3-0~ubuntu-focal | https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
 ```
+
 使用第二列中的版本字符串安装特定版本，例如`5:20.10.17~3-0~ubuntu-focal`
 
 ```powershell
@@ -111,6 +115,7 @@ $ sudo docker run hello-world
 ```
 
 结果如下：
+
 ```powershell
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -124,25 +129,31 @@ This message shows that your installation appears to be working correctly.
 
 ### 卸载 Docker 引擎
 1. 卸载 Docker Engine、CLI、Containerd 和 Docker Compose 软件包：
+
 ```powershell
 $ sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 2. 主机上的映像、容器、卷或自定义配置文件不会自动删除。要删除所有映像、容器和卷：
+
 ```powershell
 $  sudo rm -rf /var/lib/docker
 $ sudo rm -rf /var/lib/containerd
 ```
+
 您必须手动删除任何已编辑的配置文件。
 
 ### 设置非root用户不用`sudo`运行docker命令
 1. 创建名为docker的组，如果之前已经有该组就会报错，可以忽略这个错误：
+
 ```powershell
 $ sudo groupadd docker
 ```
 2. 将当前用户加入组docker：
+
 ```shell
 $ sudo gpasswd -a ${USER} docker
 ```
+
 3. 重新注销用户再登录，打开终端运行docker命令可以不用加`sudo`了。
 
 
@@ -150,6 +161,7 @@ $ sudo gpasswd -a ${USER} docker
 * [docker命令详解](https://segmentfault.com/a/1190000008876540)
 * [官网命令文档](https://docs.docker.com/engine/reference/commandline/)
 ### 帮助命令
+
 ```powershell
 $ docker version        # 显示docker的版本信息
 $ docker info           # 显示docker系统信息，包括镜像和容器的数量
@@ -157,7 +169,8 @@ $ docker 命令 --help    # 帮助命令
 ```
 
 ### 镜像命令
-* `docker images`查看所有本地主机上的镜像，[docker images命令](https://docs.docker.com/engine/reference/commandline/images/)
+`docker images`查看所有本地主机上的镜像，[docker images命令](https://docs.docker.com/engine/reference/commandline/images/)
+
 ```powershell
 $ docker images
 REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
@@ -177,9 +190,11 @@ SIZE          镜像的大小
 # 可选项
   -a, --all             # 显示所有镜像
   -q, --quiet           # 显示镜像的id
+
 ```
 
-* `docker search`搜索镜像，[docker search](https://docs.docker.com/engine/reference/commandline/search/)
+`docker search`搜索镜像，[docker search](https://docs.docker.com/engine/reference/commandline/search/)
+
 ```powershell
 $ docker search mysql
 NAME                           DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
@@ -197,7 +212,8 @@ mysql     MySQL is a widely used, open-source relation…   12708     [OK]
 mariadb   MariaDB Server is a high performing open sou…   4878      [OK]   
 ```
 
-* `docker pull`下载镜像,[docker pull](https://docs.docker.com/engine/reference/commandline/pull/)
+`docker pull`下载镜像,[docker pull](https://docs.docker.com/engine/reference/commandline/pull/)
+
 ```powershell
 # 下载镜像 docker pull 镜像名[:tag]
 $ docker pull mysql
@@ -248,18 +264,21 @@ mysql             5.7       2a0961b7de03   13 days ago    462MB
 mysql             latest    65b636d5542b   13 days ago    524MB
 ```
 
-* `docker rmi`删除镜像，[docker rmi](https://docs.docker.com/engine/reference/commandline/rmi/)
+`docker rmi`删除镜像，[docker rmi](https://docs.docker.com/engine/reference/commandline/rmi/)
+
 ```shell
 $ docker rmi -f 容器id    # 删除指定的容器
 $ docker rmi -f 容器id 容器id 容器id 容器id 容器id # 删除多个容器
 $ docker rmi -f $(docker images -aq) # 删除全部容器
 ```
 ### 容器命令
-* 说明：我们有了镜像才能创建容器，下载centos镜像来测试
+说明：我们有了镜像才能创建容器，下载centos镜像来测试
+
 ```powershell
 $ docker pull centos
 ```
-* 新建容器并启动,[docker run](https://docs.docker.com/engine/reference/commandline/run/)
+新建容器并启动,[docker run](https://docs.docker.com/engine/reference/commandline/run/)
+
 ```powershell
 $ docker run [可选参数] image
 
@@ -285,6 +304,7 @@ exit
 ```
 
 * `docker ps`列出所有运行的容器
+
 ```powershell
 $ docker ps 命令
     # 列出当前真在运行的的容器
@@ -317,20 +337,23 @@ f766035e7769
 286484b695e4
 ```
 
-* 退出容器
+退出容器
+
 ```powershell
 $ exit    # 直接容器停止并退出
 $ Ctrl + P + Q # 容器不停止推出
 ```
 
-* 删除容器
+删除容器
+
 ```shell
 $ docker rm 容器id                   # 删除制定的容器，不能删除正在运行的容器，如果要强制删除需要使用 rm -f 
 $ docker rm -f $(docker ps -aq)     # 删除所有容器
 $ docker ps -a -q | xargs docker rm # 删除所有的容器
 ```
 
-* 启动和停止容器的操作
+启动和停止容器的操作
+
 ```powershell
 $ docker start 容器id       # 启动容器
 $ docker restart  容器id    # 重启容器
@@ -338,7 +361,8 @@ $ docker stop 容器id        # 停止当前正在运行的的容器
 $ docker kill 容器id        # 强制停止当前容器
 ```
 
-* 常用的其他命令
+常用的其他命令
+
 ```powershell
 # 命令：docker run -d 镜像名 
 $ docker run -d centos
@@ -349,7 +373,8 @@ $ docker run -d centos
 # apache ,容器启动后，发现自己没有提供服务，就会停止，就没有程序了。
 ```
 
-* 查看日志,[docker logs](https://docs.docker.com/engine/reference/commandline/logs/)
+查看日志,[docker logs](https://docs.docker.com/engine/reference/commandline/logs/)
+
 ```powershell
 $  docker logs -tf --tail 10 容器id 没有日志
 # 如果docker镜像启动本来就没有日志，可以编写一个脚本进行测试
@@ -380,7 +405,8 @@ $ docker logs -tf --tail 10 be72714b0e60
 2022-06-10T12:52:18.995010360Z hello docker
 ```
 
-* 查看容器进程信息
+查看容器进程信息
+
 ```powershell
 $ docker top 容器id  # 查看指定容器的进程信息 
 $ $ docker top be72714b0e60
@@ -389,7 +415,8 @@ root                650475              650452              0                   
 root                682489              650475              0                   21:17               ?                   00:00:00            /usr/bin/coreutils --coreutils-prog-shebang=sleep /usr/bin/sleep 1
 ```
 
-* 查看镜像的元数据
+查看镜像的元数据
+
 ```powershell
 # 命令
 $ docker inspect 容器id   
@@ -605,7 +632,8 @@ $ docker inspect be72714b0e60
 ]
 ```
 
-* 进入当前正在运行的容器
+进入当前正在运行的容器
+
 ```powershell
 # 我们通常容器都是使用后台方式运行的，需要进入容器，修改一些配置
 
@@ -635,7 +663,8 @@ $ docker attach be72714b0e60
 # docker attach    # 进入容器正在执行的终端，不会启动新的进程！
 ```
 
-* 从容器拷贝文件到主机上
+从容器拷贝文件到主机上
+
 ```shell
 $ docker cp 容器id:容器内路径 目的主机路径
 
@@ -666,7 +695,7 @@ kizai.py
 # 后面使用数据卷的技术才能把数据打通
 ```
 
-* docker命令小结
+#### docker命令小结
 
 ![](https://s2.loli.net/2022/06/11/Y8KOJcbwRX67mHB.png)
 
@@ -813,7 +842,8 @@ centos            latest    5d0da3dc9764   8 months ago   231MB
 # 启动httpd服务
 $ docker run -it -p 8088:80 --name apache-tt -d httpd
 d0f5368beceec8596197b734ff6be012b26eee32b3dae20df2a07ef17525e9a1
-# 查看启动状态
+# 
+查看启动状态
 $ docker ps
 CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS             PORTS                                       NAMES
 d0f5368becee   httpd             "httpd-foreground"       33 seconds ago   Up 31 seconds      0.0.0.0:8088->80/tcp, :::8088->80/tcp       apache-tt
@@ -869,10 +899,13 @@ httpd-test        0.0.1     5ef56fce7bbb   25 seconds ago   199MB
 
 ### docker操作实例
 1. 拉取官方的镜像
+
 ```powershell
 $ docker pull httpd
 ```
+
 2. 等待下载完成后，我们就可以在本地镜像列表里查到REPOSITORY为httpd的镜像。
+
 ```powershell
 $ docker images httpd
 REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
@@ -881,20 +914,25 @@ httpd        latest    98f93cd0ec3b   11 days ago   144MB
 
 #### 使用apache镜像
 1. 运行容器
+
 ```powershell
 $ docker run -it -p 8877:80 --name apache-test -d httpd 
 986f882220ef2e78874d20e6ea7e6dbd2d62877e2026b1e2bbc489482e3291ae
 ```
+
 * --name 为容器取一个名字
 * -p 参数语法为 -p host port:container port; -p 8877:80 将主机上的8080端口绑定到容器上的80端口，因此在主机中访问8080端口时其实就是访问 nginx 容器的80端口
 * -d 后台运行容器
 2. 查看Docker运行情况
+
 ```powershell
 $ docker ps -a
 CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                        PORTS                                   NAMES
 986f882220ef   httpd          "httpd-foreground"       33 seconds ago   Up 32 seconds                 0.0.0.0:8877->80/tcp, :::8877->80/tcp   apache-test
 ```
+
 3. 查看容器运行日志
+
 ```shell
 docker logs apache-test
 AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
@@ -930,6 +968,7 @@ AH00558: httpd: Could not reliably determine the server's fully qualified domain
 #### 创建钉钉机器人查询服务的API服务镜像
 
 1. 创建文件构建镜像的文件夹,拷贝API服务代码到app目录下。
+
 ```powershell
 $ cd ～
 $ mkdir -p Docker_Project/Query_DingBot/app
@@ -943,7 +982,9 @@ $ mkdir -p Docker_Project/Query_DingBot/app
 
 1 directory, 3 files
 ```
+
 2. 在`Query_DingBot`创建Dockerfile文件
+
 ```powershell
 $ vim Dockerfile
 # 添加以下内容
@@ -971,17 +1012,22 @@ CMD ["app/lemumsg_run.py"]
 * `FROM`指令指定初始镜像。
 * 所有`Dockerfile`一定要有`FROM`指令作为第一个非注释指令。
 * RUN 指令指定的`shell`命令，是将要在镜像里执行的。
+
 3. 在同一目录下执行docker build 命令：
+
 ```powershell
 $ docker build -t dingmsg_service .
 ```
-3. 查看构建成功的镜像：
+
+4. 查看构建成功的镜像：
+
 ```powershell
 $ docker image ls
 REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
 dingmsg_service   latest    cd4570fa31e6   2 minutes ago    437MB
 ```
-4. 运行`dingmsg_service `镜像
+5. 运行`dingmsg_service `镜像
+
 ```powershell
 $ docker run -it --restart=always -p 6655:6655 --name dingbot-test -d dingmsg_service
 
@@ -993,7 +1039,9 @@ $ docker run -it --restart=always -p 6655:6655 --name dingbot-test -d dingmsg_se
        always　　　　  // 无论退出状态是如何，都重启容器；
        unless-stopped  // 在容器退出时总是重启容器，但是不考虑在 Docker 守护进程启动时就已经停止了的容器
 ```
-5. 查看Docker运行的log
+
+6. 查看Docker运行的log
+
 ```log
 $ docker logs dingbot-test 
  * Serving Flask app 'lemumsg_run' (lazy loading)
@@ -1017,8 +1065,10 @@ Docker的日志一般保存在`/var/lib/docker/. `每个容器都有一个特定
 ```powershell
 /var/lib/docker/containers/ID/ID-json.log
 ```
-6. 重启电脑后查看docker进程，dingbot-test进程服务依旧运行着。
-7. 进入dingbot-test终端进行交互：
+
+7. 重启电脑后查看docker进程，dingbot-test进程服务依旧运行着。
+8. 进入dingbot-test终端进行交互：
+
 ```powershell
 $ docker exec -i -t dingbot-test /bin/bash
 root@7e61c738bcf4:/app# ls
@@ -1032,13 +1082,16 @@ config.ini  lemumsg_run.py
 ### 导出/载入Docker镜像，以dingmsg_service镜像为例
 #### 使用 export 和 import
 1. 查看本机的容器。
+
 ```powershell
 $ docker ps
 CONTAINER ID   IMAGE             COMMAND                  CREATED        STATUS             PORTS                                       NAMES
 7e61c738bcf4   dingmsg_service   "python3 app/lemumsg…"   7 hours ago    Up 6 hours         0.0.0.0:6655->6655/tcp, :::6655->6655/tcp   dingbot-test
 986f882220ef   httpd             "httpd-foreground"       25 hours ago   Up About an hour   0.0.0.0:8877->80/tcp, :::8877->80/tcp       apache-test
 ```
+
 2. 使用 docker export 命令根据容器 ID 将镜像导出成一个文件。
+
 ```powershell
 # 创建文件夹来保存镜像文件
 $ mkdir -p ~/Docker_Project/images
@@ -1048,13 +1101,17 @@ $ docker export 7e61c738bcf4 > ~/Docker_Project/images/dingbot_msg_01.tar
 $ ls
 dingbot_msg_01.tar
 ```
+
 上面命令执行后，可以看到文件已经保存到当前的`~/Docker_Project/images`终端目录下。
 3. 使用 `docker import` 命令则可将这个镜像文件导入进来。
+
 ```powershell
 $ docker import - new_dingbot_msg < dingbot_msg_01.tar
 sha256:cde233707f864c1578cb521d4ba88eee38f185b6435cc3478e49ec8e7aa07705
 ```
+
 4. 执行 `docker images ls` 命令可以看到镜像确实已经导入进来了。
+
 ```shell
 $ docker image ls
 REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
@@ -1063,6 +1120,7 @@ dingmsg_service   latest    269caf0cc7eb   7 hours ago      437MB
 ```
 #### 使用 save 和 load
 1. 查看本机的容器。
+
 ```powershell
 $ docker image ls
 REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
@@ -1072,14 +1130,19 @@ ubuntu            20.04     20fffa419e3a   2 days ago       72.8MB
 httpd             latest    98f93cd0ec3b   12 days ago      144MB
 hello-world       latest    feb5d9fea6a5   8 months ago     13.3kB
 ```
+
 2. 下面使用 `docker save` 命令根据 ID 将镜像保存成一个文件。
+
 ```powershell
 $ docker save 269caf0cc7eb > dingbot_msg_02.tar 
 ```
+
 3. 载入镜像,使用 `docker load` 命令则可将这个镜像文件载入进来。
+
 ```powershell
 docker load < dingbot_msg_02.tar
 ```
+
 >> 特别注意：两种方法不可混用。
    * 如果使用 `import` 导入 `save` 产生的文件，虽然导入不提示错误，但是启动容器时会提示失败，会出现类似`docker: Error response from daemon: Container command not found or does not exist`的错误。
 

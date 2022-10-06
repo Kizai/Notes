@@ -23,8 +23,9 @@
 
 ## 二、Docker Registry搭建
 ### 1. 在虚拟机安装Docker引擎
+
 ```shell
-# 更新apt包索引并安装包以允许apt通过 HTTPS 使用存储库：
+// 更新apt包索引并安装包以允许apt通过 HTTPS 使用存储库：
 $ sudo apt-get update
 $ sudo apt-get install \
     ca-certificates \
@@ -32,20 +33,20 @@ $ sudo apt-get install \
     gnupg \
     lsb-release
 
-# 添加 Docker 的官方 GPG 密钥：
+// 添加 Docker 的官方 GPG 密钥：
 $ sudo mkdir -p /etc/apt/keyrings
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
-# 使用以下命令设置存储库：
+// 使用以下命令设置存储库：
 $  echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
 
-# 安装 Docker 引擎
+// 安装 Docker 引擎
 $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-# 查看ubuntu22.04支持的版本
+// 查看ubuntu22.04支持的版本
 $ apt-cache madison docker-ce
  docker-ce | 5:20.10.17~3-0~ubuntu-jammy | https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages
  docker-ce | 5:20.10.16~3-0~ubuntu-jammy | https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages
@@ -53,37 +54,41 @@ $ apt-cache madison docker-ce
  docker-ce | 5:20.10.14~3-0~ubuntu-jammy | https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages
  docker-ce | 5:20.10.13~3-0~ubuntu-jammy | https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages
 
-# 安装5:20.10.17~3-0~ubuntu-jammy
+// 安装5:20.10.17~3-0~ubuntu-jammy
 $ sudo apt-get install docker-ce=5:20.10.17~3-0~ubuntu-jammy docker-ce-cli=5:20.10.17~3-0~ubuntu-jammy containerd.io docker-compose-plugin
 
-# 查看docker版本，确保跟用户机版本一致
+// 查看docker版本，确保跟用户机版本一致
 $ docker -v
 Docker version 20.10.17, build 100c701
+
 ```
 
 ### 2. 配置docker 注册表
 * 方式1：不使用配置文件来配置注册表
-```powershell
-# 拉取 registry 镜像，下面是使用registry:2.6.2版本的搭建过程
+
+```bashshell
+// 拉取 registry 镜像，下面是使用registry:2.6.2版本的搭建过程
 $ docker pull registry:2.6.2
 
-# 查看 registry 镜像是否拉取成功
+// 查看 registry 镜像是否拉取成功
 $ docker images | grep registry
 
-# 启动 registry 并将仓库数据映射到本地指定目录。默认情况下，会将仓库放在容器内的/var/lib/registry/目录下，这样有个问题，如果容器被删除，则存放在容器中的镜像也会丢失。
+// 启动 registry 并将仓库数据映射到本地指定目录。默认情况下，会将仓库放在容器内的/var/lib/registry/目录下，这样有个问题，如果容器被删除，则存放在容器中的镜像也会丢失。
 $ docker run -d -p 5000:5000 -v /docker/registry/:/var/lib/registry/ --name registry --restart=always registry:2.6.2
 
-# 查看容器启动情况
+// 查看容器启动情况
 $ docker ps
 75cd1af29707   registry   "/entrypoint.sh /etc…"   27 seconds ago   Up 26 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp  registry:2.6.2
+
 ```
 
 * 方式2：使用配置文件来配置注册表
-```powershell
-# 如果默认配置不是您使用的合理基础，或者如果您在从环境中覆盖密钥时遇到问题，您可以通过将其安装为容器中的卷来指定备用 YAML 配置文件。
-# 通常，从头开始创建一个名为的新配置文件config.yml，然后在docker run命令中指定它：
+
+```bashshell
+// 如果默认配置不是您使用的合理基础，或者如果您在从环境中覆盖密钥时遇到问题，您可以通过将其安装为容器中的卷来指定备用 YAML 配置文件。
+// 通常，从头开始创建一个名为的新配置文件config.yml，然后在docker run命令中指定它：
 $ vim config.yml
-# 写入以下内容
+// 写入以下内容
 version: 0.1
 log:
   level: debug
@@ -101,16 +106,18 @@ $ docker run -d -p 5000:5000 --restart=always --name registry \
             -v /docker/registry/:/var/lib/registry/ \
             registry:2.6.2
 
-# 查看容器运行情况
+// 查看容器运行情况
 $ docker ps
 CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                                       NAMES
 49dcf33f7e92   registry:2.6.2   "/entrypoint.sh /etc…"   16 seconds ago   Up 15 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   registry
+
 ```
 
 ### 3. 在普通机上配置私有仓库地址(**服务机如果需要推送镜像也需要做以下的配置！**)
 如果不配置私有仓库地址会报`http: server gave HTTP response to HTTPS client`；出现这问题的原因是：Docker自从1.3.X之后docker registry交互默认使用的是HTTPS，但是搭建私有镜像默认使用的是HTTP服务，所以与私有镜像推送时出现以上错误。
-```powershell
-# 在 /etc/docker/daemon.json 新增配置文件中添加 "insecure-registries": [ "10.0.0.139:5000"] 此处IP为私有仓库IP
+
+```bashshell
+// 在 /etc/docker/daemon.json 新增配置文件中添加 "insecure-registries": [ "10.0.0.139:5000"] 此处IP为私有仓库IP
 $ sudo vim /etc/docker/daemon.json 
 {
     "registry-mirrors": [
@@ -120,11 +127,11 @@ $ sudo vim /etc/docker/daemon.json
     "insecure-registries": ["10.0.0.139:5000"]
 }
 
-# 修改完成后重启docker服务,如果重启服务失败，请检查/etc/docker/daemon.json的内容是否正确
+// 修改完成后重启docker服务,如果重启服务失败，请检查/etc/docker/daemon.json的内容是否正确
 $ sudo systemctl daemon-reload 
 $ sudo systemctl restart docker.service
 
-# 可以使用docker info查看配置是否应用成功
+// 可以使用docker info查看配置是否应用成功
 $ docker info
 ....
  Insecure Registries:
@@ -137,28 +144,28 @@ $ docker info
 ....
 ```
 ### 4. 在普通用户机上提交本地的镜像到私有仓库
-```powershell
-# 命令
+```bashshell
+// 命令
 $ docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 -a :提交的镜像作者；
 -c :使用Dockerfile指令来创建镜像；
 -m :提交时的说明文字；
 -p :在commit时，将容器暂停。
 
-# 查看用户机的全部容器
+// 查看用户机的全部容器
 $ docker ps -a
 CONTAINER ID   IMAGE            COMMAND                  CREATED        STATUS                    PORTS                                       NAMES
 38016114e6b3   dingbotmsg:1.1   "python3 app/lemumsg…"   10 hours ago   Up 10 hours               0.0.0.0:6655->6655/tcp, :::6655->6655/tcp   dingbot-api
 
-# 提交dingbot-api容器生成镜像
+// 提交dingbot-api容器生成镜像
 $ docker commit -a "kizai<kziai@foxmail.com>" -m "commit to docker hub" dingbot-api 10.0.0.139:5000/lemumsg-api:1.0
 
-# 查看docker镜像
+// 查看docker镜像
 $ docker images
 REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
 10.0.0.139:5000/lemumsg-api   1.0       d552ded0dac3   10 seconds ago   439MB
 
-# 推送镜像到私有仓库
+// 推送镜像到私有仓库
 $ docker push 10.0.0.139:5000/lemumsg-api:1.0
 The push refers to repository [10.0.0.139:5000/lemumsg-api]
 f39deba227af: Pushed 
@@ -172,7 +179,7 @@ ef8e088d604d: Pushed
 af7ed92504ae: Pushed 
 1.0: digest: sha256:612a71480f73ed57d4622b478685992ef85447c7c75780c49c7dd4c416fc72d3 size: 2211
 
-# 终端显示以上信息则说明推送镜像成功了
+// 终端显示以上信息则说明推送镜像成功了
 ```
 
 ### 5. 查看提交的镜像：
@@ -181,7 +188,7 @@ af7ed92504ae: Pushed
 ![](https://s2.loli.net/2022/06/16/WsQUXyuzgicBJrn.png)
 
 * 方法2：在服务机运行DockerHub时，我们是把容器内存放镜像的文件夹挂载到宿主机的文件夹的`-v /docker/registry/:/var/lib/registry/`,所以我们现在可以查看宿主机上的`/docker/registry/`文件是否有刚刚上传的镜像：
-```powershell
+```bashshell
 $ cd /docker/registry/docker/registry/v2/repositories/
 $ pwd
 /docker/registry/docker/registry/v2/repositories
@@ -189,18 +196,18 @@ $ ls
 lemumsg-api
 ```
 ### 6. 在普通用户机拉取私有仓库镜像
-```powershell
-# 先把用户机的镜像删掉
-# 查看本机的docker 镜像
+```bashshell
+// 先把用户机的镜像删掉
+// 查看本机的docker 镜像
 $ docker images
 REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
 10.0.0.139:5000/lemumsg-api   1.0       d552ded0dac3   4 hours ago    439MB
 
-# 删除lemumsg-api 的镜像
+// 删除lemumsg-api 的镜像
 $ docker rmi -f d552ded0dac3
 
-# 从私有仓库拉取镜像
-# 命令：docker pull 仓库ip:5000/镜像名:TAG ,如果不加tag标签，默认是拉取latest版本的
+// 从私有仓库拉取镜像
+// 命令：docker pull 仓库ip:5000/镜像名:TAG ,如果不加tag标签，默认是拉取latest版本的
 $ docker pull 10.0.0.139:5000/lemumsg-api:1.0
 1.0: Pulling from lemumsg-api
 d7bfe07ed847: Already exists 
@@ -216,7 +223,7 @@ Digest: sha256:612a71480f73ed57d4622b478685992ef85447c7c75780c49c7dd4c416fc72d3
 Status: Downloaded newer image for 10.0.0.139:5000/lemumsg-api:1.0
 10.0.0.139:5000/lemumsg-api:1.0
 
-# 查看镜像：
+// 查看镜像：
 $ docker images
 REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
 10.0.0.139:5000/lemumsg-api   1.0       d552ded0dac3   4 hours ago    439MB
@@ -224,31 +231,31 @@ REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
 
 ## 三、Docker Registry 服务日志
 ### Docker Registry日志的默认位置：
-```powershell
-# local 日志驱动的储存位置 /var/lib/docker/containers/容器id/local-logs/ 以container.log 命名。
-# 可以使用 docker inspect  容器id | grep -E "LogPath" 查看当前容器的log存放位置
+```bashshell
+// local 日志驱动的储存位置 /var/lib/docker/containers/容器id/local-logs/ 以container.log 命名。
+// 可以使用 docker inspect  容器id | grep -E "LogPath" 查看当前容器的log存放位置
 $ docker inspect  2c308894c4d5 | grep -E "LogPath"
 "LogPath": "/var/lib/docker/containers/2c308894c4d5eb20613ec3441167c1009fe30e649f91823e0ec79553d237160c/2c308894c4d5eb20613ec3441167c1009fe30e649f91823e0ec79553d237160c-json.log",
 
-# 查看容器引擎日志
+// 查看容器引擎日志
 $ journalctl -u docker 
 ```
 ### 查看系统当前设置的日志驱动
-```powershell
+```bashshell
 $ docker inspect  -f '{{.HostConfig.LogConfig.Type}}'   容器id
 ```
 
 ## 四、在服务机创建自签发证书，生成用户名和密码进行登录
-```powershell
-# 创建证书文件夹
+```bashshell
+// 创建证书文件夹
 $ mkdir /certs
-# 创建registry登录用户配置文件文件夹
+// 创建registry登录用户配置文件文件夹
 $ mkdir /auth
-# 生成自签名证书
+// 生成自签名证书
 $ openssl req -x509 -days 365 -subj '/CN=183.234.102.178:55000/' -newkey rsa:4096 -nodes -sha256 -keyout /certs/domain.key -out /certs/domain.crt
 
 
-# 关于openssl命令中的一些参数说明如下。
+// 关于openssl命令中的一些参数说明如下。
 ● -x509：x509是一个自签发证书的格式；
 ● -days 365：表示证书有效期；
 ● 183.234.102.178:55000：表示具体部署Docker Registry本地镜像仓库的地址和端口；
@@ -256,12 +263,12 @@ $ openssl req -x509 -days 365 -subj '/CN=183.234.102.178:55000/' -newkey rsa:409
 ● domain.key和domain.crt：就是生成的证书文件。
 
 
-# 创建一个我们的private registry用户，admin admin 就是账号和密码了。
-# 在Docker Registry本地镜像仓库所在的Docker主机上生成自签名证书后，为了确保Docker机器与该Docker Registry本地镜像仓库的交互，还需要生成一个连接认证的用户名和密码，使其他Docker用户只有通过用户名和密码登录后才允许连接到Docker Registry本地镜像仓库。
-$ docker run --rm --entrypoint htpasswd registry:2.6.2 -Bbn admin admin >> auth/htpasswd # 管理员帐号
-$ docker run --rm --entrypoint htpasswd registry:2.6.2 -Bbn lemu lemu >> auth/htpasswd # 普通账户
+// 创建一个我们的private registry用户，admin admin 就是账号和密码了。
+// 在Docker Registry本地镜像仓库所在的Docker主机上生成自签名证书后，为了确保Docker机器与该Docker Registry本地镜像仓库的交互，还需要生成一个连接认证的用户名和密码，使其他Docker用户只有通过用户名和密码登录后才允许连接到Docker Registry本地镜像仓库。
+$ docker run --rm --entrypoint htpasswd registry:2.6.2 -Bbn admin admin >> auth/htpasswd // 管理员帐号
+$ docker run --rm --entrypoint htpasswd registry:2.6.2 -Bbn lemu lemu >> auth/htpasswd // 普通账户
 
-# 启动Docker hub镜像
+// 启动Docker hub镜像
 $ docker run -dit -p 5000:5000 --restart=always --name hub \
   -v /auth:/auth \
   -e "REGISTRY_AUTH=htpasswd" \
@@ -273,7 +280,7 @@ $ docker run -dit -p 5000:5000 --restart=always --name hub \
   -v /docker/registry/:/var/lib/registry/ \
   registry:2.6.2
 
-# 解释参数
+// 解释参数
 -d：表示容器后台运行
 -p：端口映射 --restart=always：可以理解为开机启动。开机：就是启动docker客户端拉。
 --name registry：给容器取一个名字，方便识别和记忆 -v:挂在本地文件到容器中。命令格式：hostdir:cdir[:rw|ro] 主机目录:容器目录[:读写权限]
@@ -287,11 +294,11 @@ $ docker run -dit -p 5000:5000 --restart=always --name hub \
 -e REGISTRY_HTTP_TLS_KEY：ssl证书文件路径 
 最后的registry则是镜像的名字了。
 
-# 配置Docker Registry访问接口
+// 配置Docker Registry访问接口
 $ sudo mkdir -p /etc/docker/certs.d/183.234.102.178:55000
 $ sudo cp certs/domain.crt /etc/docker/certs.d/183.234.102.178:55000
 
-# 在 /etc/docker/daemon.json 新增配置文件中添加 "insecure-registries": [ "183.234.102.178:55000"] 此处IP为私有仓库IP
+// 在 /etc/docker/daemon.json 新增配置文件中添加 "insecure-registries": [ "183.234.102.178:55000"] 此处IP为私有仓库IP
 $ sudo vim /etc/docker/daemon.json 
 {
     "registry-mirrors": [
@@ -304,23 +311,23 @@ $ sudo vim /etc/docker/daemon.json
       ]
 }
 
-# 修改完成后重启docker服务,如果重启服务失败，请检查/etc/docker/daemon.json的内容是否正确
+// 修改完成后重启docker服务,如果重启服务失败，请检查/etc/docker/daemon.json的内容是否正确
 $ sudo systemctl daemon-reload 
 $ sudo systemctl restart docker.service
 
-# 推送镜像测试
+// 推送镜像测试
 $ docker push 183.234.102.178:55000/lemudevmsg-api
 Using default tag: latest
 The push refers to repository [183.234.102.178:55000/lemudevmsg-api]
 tag does not exist: 183.234.102.178:55000/lemudevmsg-api:latest
 
-# 登录Docker Registry镜像仓库
+// 登录Docker Registry镜像仓库
 $ docker login 183.234.102.178:55000
 Username: admin
 Password: 
 WARNING! Your password will be stored unencrypted in /home/lemu-devops/.docker/config.json.
 Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+https://docs.docker.com/engine/reference/commandline/login///credentials-store
 
 Login Succeeded
 ```
@@ -333,7 +340,7 @@ Login Succeeded
 ## 五、Docker镜像仓库的管理和运维
 ### 1. 确保镜像内容的一致性
 在应用的开发、测试和运行等各个阶段，需要确保都使用同一个应用的镜像。一种做法是在每个阶段都用相同dockerfile去生成所需镜像。通常认为，相同的dockerfile可以构件出相同的镜像，而实际上却并非如此。例如下面的dockerfile 部分：
-```powershell
+```bashshell
 FROM ubuntu
 RUN apt-get install –y python
 ADD app.py /myapp/app.py
@@ -409,7 +416,7 @@ ADD app.py /myapp/app.py
 ## 六、Docker Hub部署到Gitlab仓库
 ### 部署Gitlab仓库
 1. 拉取gitlab-ce的镜像
-```powershell
+```bashshell
 $ docker pull gitlab/gitlab-ce
 Using default tag: latest
 latest: Pulling from gitlab/gitlab-ce
@@ -426,7 +433,7 @@ Status: Downloaded newer image for gitlab/gitlab-ce:latest
 docker.io/gitlab/gitlab-ce:latest
 ```
 2. 启动镜像
-```powershell
+```bashshell
 $ docker run -d \
 --hostname 10.0.0.139 \
 -p 8443:443 \
@@ -440,7 +447,7 @@ $ docker run -d \
 gitlab/gitlab-ce
 ```
 3. 查看镜像运行情况：
-```powershell
+```bashshell
 $ docker ps
 CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS                            PORTS                                                                                                                   NAMES
 55fb5717a53c   gitlab/gitlab-ce   "/assets/wrapper"        3 seconds ago   Up 2 seconds (health: starting)   0.0.0.0:2222->22/tcp, :::2222->22/tcp, 0.0.0.0:9980->80/tcp, :::9980->80/tcp, 0.0.0.0:8443->443/tcp, :::8443->443/tcp   gitlab
@@ -448,25 +455,26 @@ CONTAINER ID   IMAGE              COMMAND                  CREATED         STATU
 
 
 4. 修改配置文件
->> 提示：等待docker运行gitlab一小段时间后在操作运行状态为`Up 24 minutes (healthy) `，否则可能出现文件找不到
-```powershell
-# 修改gitlab.rb文件
+* **提示**：等待docker运行gitlab一小段时间后在操作运行状态为`Up 24 minutes (healthy) `，否则可能出现文件找不到
+
+```bashshell
+// 修改gitlab.rb文件
 $ vim /usr/local/gitlab/config/gitlab.rb 
 
-# 找到external_url，默认是被注释的，要打开，并填写暴露出去的http://ip:port，port为你启动时指定的，我们这里使用9980作为端口；最后加上ssh协议下使用的IP和端口(这里的端口是你启动时指定的，我们这里是2222)，最后保存并退出
+// 找到external_url，默认是被注释的，要打开，并填写暴露出去的http://ip:port，port为你启动时指定的，我们这里使用9980作为端口；最后加上ssh协议下使用的IP和端口(这里的端口是你启动时指定的，我们这里是2222)，最后保存并退出
 
 external_url 'http://10.0.0.139:9980'
 gitlab_rails['gitlab_shell_ssh_port'] = '2222'
 ```
 5. 停止并移除之前启动的gitlab
-```powershell
+```bashshell
 $ docker stop 55fb5717a53c
 55fb5717a53c
 $ docker rm -f  55fb5717a53c
 55fb5717a53c
 
-# 重新启动gitlab
-# 这里要将容器端口改为9980.
+// 重新启动gitlab
+// 这里要将容器端口改为9980.
 $ docker run -d \
 --hostname 10.0.0.139 \
 -p 8443:443 \
@@ -479,13 +487,13 @@ $ docker run -d \
 -v /usr/local/gitlab/data:/var/opt/gitlab \
 gitlab/gitlab-ce
 
-# 等待gitlab初始化完成，就可以访问了，首次需要更改root账户的密码
+// 等待gitlab初始化完成，就可以访问了，首次需要更改root账户的密码
 $ docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
 Password: WVXNS3kqyxBRHlTB2drp4/tTThzoWzXe/vm2RTumS7M=
 
-# 预设用户为root，打开浏览器输入：http://10.0.0.139:9980/ 或 http://183.234.102.178:9980/ 登录gitlab之后修改就好，修改后的密码为：Lemu@1215
+// 预设用户为root，打开浏览器输入：http://10.0.0.139:9980/ 或 http://183.234.102.178:9980/ 登录gitlab之后修改就好，修改后的密码为：Lemu@1215
 
-# 最后还需要添加机器的ssh密钥到gitlab上
+// 最后还需要添加机器的ssh密钥到gitlab上
 ```
 ### 安装Gitlab-Runner
 1. 创建一个空白的项目：CICD_Demo进行测试：
@@ -497,12 +505,12 @@ Password: WVXNS3kqyxBRHlTB2drp4/tTThzoWzXe/vm2RTumS7M=
 ![](https://s2.loli.net/2022/06/22/Wjs6fPpqUkQLKRB.png)
 
 3. 拉取gitlab-Runner镜像并启动
-```powershell
+```bashshell
 $ docker run -d --name gitlab-runner --restart always -v /srv/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-runner:latest
 ```
 
 4. 注册并配置Runner
-```powershell
+```bashshell
 $ docker exec gitlab-runner gitlab-runner register -n \
 --url http://10.0.0.139:9980/ \
 --registration-token yuiTZyXpDQwPo98vd2XP \
@@ -519,12 +527,12 @@ $ docker exec gitlab-runner gitlab-runner register -n \
 ![](https://s2.loli.net/2022/06/22/I3SWOnCdiAvLg8G.png)
 
 5. 修改Runner配置文件（非必须）
-```powershell
+```bashshell
 $ vim /srv/gitlab-runner/config/config.toml
 
-# 在volumes配置下方增加一行配置，防止Runner重复拉取镜像
+// 在volumes配置下方增加一行配置，防止Runner重复拉取镜像
 pull_policy = "if-not-present"
 
-# 最后重启Runner
+// 最后重启Runner
 $ docker restart gitlab-runner
 ```

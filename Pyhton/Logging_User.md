@@ -48,7 +48,6 @@ Logging 模块提供了两种日志记录方式：
 [more](https://docs.python.org/zh-cn/3/library/logging.html)
 
 #### 打印日志的例子：
-[logging1.py](../logging1.py)
 ```py
 import logging
 
@@ -104,7 +103,6 @@ CRITICAL:root:Python critical
 **注意：Logging.basicConfig() 需要在开头就设置，在中间设置并无作用**
 
 #### 实例
-[logging2.py](../logging2.py)
 ```py
 import logging
 
@@ -131,13 +129,7 @@ CRITICAL:root:Python critical
 
 ### 将日志信息记录到文件
 #### 实例
-[logging3.py](../logging3.py)
 ```py
-
-\
-
-
-
 import logging
 
 # 日志信息记录到文件,这时日志不会输出到终端上
@@ -156,7 +148,7 @@ WARNING:root:And this, too
 #### 多个模块记录日志信息
 如果程序包含多个模块，则用以下实例来显示日志信息： 实例中有两个模块，一个模块通过导入另一个模块的方式用日志显示另一个模块的信息：
 
-**[myapp.py](../myapp.py) 模块**
+**模块**
 ```py
 import logging
 import mylib
@@ -186,7 +178,6 @@ INFO:root:Finishe
 ```
 
 #### 显示信息的日期及更改显示消息格式
-实例：[logging4.py](../logging4.py)
 ```py
 import logging
 # 显示消息时间

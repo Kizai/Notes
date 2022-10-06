@@ -1,31 +1,44 @@
 # Cron语法
 
 ### 1. 语法指令
+
 ```bash
 crontab [-u user] {-l|-e|-r|-i}
-```q
+```
+
 #### crontab的语法格式：
+
 ```bash
 分 时 日 月 星期 要运行的命令
 ```
+
 #### crontab的条目举例：
 1. 下面的例子表示每晚的21:30运行/apps/bin目录下的cleanup.sh。
+
 ```bash
 30 21 * * * /apps/bin/cleanup.sh
 ```
+
 2. 下面的例子表示每月1、10、22日的4:45运行/apps/bin目录下的backup.sh。
+
 ```bash
 45 4 1,10,22 * * /apps/bin/backup.sh
 ```
+
 3. 下面的例子表示每周六、周日的1:10运行一个find命令。
+
 ```bash
 10 1 * * 6,0 /bin/find -name "core" -exec rm {} \;
 ```
+
 4. 下面的例子表示在每天18:00至23:00之间每隔30分钟运行/ apps/bin目录下的dbcheck.sh。
+
 ```bash
 0,30 18-23 * * * /apps/bin/dbcheck.sh
 ```
+
 5. 下面的例子表示每星期六的11:00pm运行/apps/bin目录下的qtrend.sh。
+
 ```bash
 0 23 * * 6 /apps/bin/qtrend.sh
 ``` 
@@ -109,9 +122,11 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 * 一旦一个作业被提交，at命令将会保留所有当前的环境变量，包括路径，不象crontab，只提供缺省的环境。该作业的所有输出都将以电子邮件的形式发送给用户，除非你对其输出进行了重定向，绝大多数情况下是重定向到某个文件中。
 和crontab一样，根用户可以通过/etc目录下的at.allow和at.deny文件来控制哪些用户可以使用at命令，哪些用户不行。不过一般来说，对at命令的使用不如对crontab的使用限制那么严格。
 #### 6.1. at命令的基本形式
+
 ```bash
 at [-f  script] [-m -l -r] [time] [date]
 ```
+
 参数说明：
 * -f script 是所要提交的脚本或命令。
 * -l 列出当前所有等待运行的作业。a t q命令具有相同的作用。
@@ -124,6 +139,7 @@ at [-f  script] [-m -l -r] [time] [date]
 #### 6.2. 使用at命令提交命令或脚本
 * 使用at命令提交作业有几种不同的形式，可以通过命令行方式，也可以使用at命令提示符。一般来说在提交若干行的系统命令时，我使用at命令提示符方式，而在提交shell脚本时，使用命令行方式。
 * 如果你想提交若干行的命令，可以在at命令后面跟上日期/时间并回车。然后就进入了at命令提示符，这时只需逐条输入相应的命令，然后按‘<CTRL-D>’退出。下面给出一个例子：
+
 ```bash
 lemu-devops@lemudevops:~$ at 10:50
 warning: commands will be executed using /bin/sh
@@ -131,8 +147,10 @@ at> fine /.csv "date" -print
 at> <EOT>
 job 1 at Sat Aug 14 10:50:00 2021
 ```
+
 * 其中，<EOT>就是<CTRL-D>。在10:50系统将执行一个简单的find命令。你应当已经注意到，我所提交的作业被分配了一个唯一标识job 1。
 * 下面这些日期/时间格式都是at命令可以接受的：
+
 ```bash
 at 6.45am May12
 at 11.10pm
@@ -141,6 +159,7 @@ at 9am tomorrow
 at now + 10 minutes - this time  spectification is my own favourite
 ```
 * 如果希望向at命令提交一个shell脚本，使用其命令行方式即可。在提交脚本时使用-f选项。
+
 ```bash
 lemu-devops@lemudevops:~/Gitlab-Runner/company-tech-doc/DevOps_Doc/Shell/Shell_Example$ at 12:54 -f Get_OS.sh 
 warning: commands will be executed using /bin/sh
@@ -149,17 +168,20 @@ job 2 at Fri Aug 13 12:54:00 2021
 ```
 ### 6.3. 清除一个作业：
 命令格式：
+
 ```bash
 atrm [jod no] or at -r[jod no]
 ```
+
 * 要清除某个作业，首先要执行at-l命令，以获取相应的作业标识，然后对该作业标识使用at -r 命令，清除该作业。有些系统使用at-r [job no]命令清除作业。
+
 ```bash
-# 列出作业列表：
+// 列出作业列表：
 lemu-devops@lemudevops:~/Gitlab-Runner/company-tech-doc/DevOps_Doc/Shell/Shell_Example$ at -l
 1	Sat Aug 14 10:50:00 2021 a lemu-devops
 
-# 删除作业1
+// 删除作业1
 lemu-devops@lemudevops:~/Gitlab-Runner/company-tech-doc/DevOps_Doc/Shell/Shell_Example$ at -r 1
 lemu-devops@lemudevops:~/Gitlab-Runner/company-tech-doc/DevOps_Doc/Shell/Shell_Example$ at -l
-# 发现作业已经被删除了。
+// 发现作业已经被删除了。
 ```
