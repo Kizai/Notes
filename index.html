@@ -9,6 +9,9 @@
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> -->
+    <!-- <link rel="stylesheet" href="https://wugenqiang.gitee.io/notebook/plugin/gitalk.css"> -->
     <!-- Theme: Simple -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"> -->
 </head>
@@ -35,6 +38,7 @@
             onlyCover: true,
             topMargin: 60, //调整top
             executeScript: true, //执行页面上的脚本，仅解析第一个脚本标签
+            // disqus: 'shortname',
             search: {
                 paths: 'auto',
                 placeholder: '🔍 搜索',
@@ -43,6 +47,14 @@
                 depth: 6,
                 maxAge: 86400000, // 过期时间，单位毫秒，默认一天
             }, //添加搜索框
+
+            //字数插件
+            count: {
+                countable: true,
+                fontsize: '0.9em',
+                color: 'rgb(90,90,90)',
+                language: 'chinese'
+            },
 
             footer: {
                 copy: '一切都是最好的安排，时间会证明一切。 —— <a href="https://blog.csdn.net/qq_42001163?" target="_blank">kizai</a><br/><br/>',
@@ -102,12 +114,15 @@
             },
         }
     </script>
+    <!-- 评论 -->
+    <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/disqus.min.js"></script> -->
     <!-- 搜索 -->
     <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
 
     <!-- 复制代码-->
     <script src="https://cdn.jsdelivr.net/gh/wugenqiang/NoteBook@master/plugin/docsify-copy-code.min.js"></script>
-
+    <!-- 字数统计 -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify-count@latest/dist/countable.min.js"></script>
     <!-- Docsify v4 -->
     <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
@@ -120,7 +135,7 @@
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-plsql.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-groovy.min.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/wugenqiang/NoteBook@master/plugin/prism-cpp.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/wugenqiang/NoteBook@master/plugin/prism-css.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/wugenqiang/NoteBook@master/plugin/prism-docker.js"></script>
@@ -152,7 +167,35 @@
         }
     </script>
 
+    <script src="https://wugenqiang.gitee.io/notebook/plugin/gitalk.js"></script>
+    <script src="https://wugenqiang.gitee.io/notebook/plugin/gitalk.min.js"></script>
+    <script src="https://wugenqiang.gitee.io/notebook/plugin/md5.min.js"></script>
 
+    <script>
+        // title_id需要初始化
+        window.title_id = window.location.hash.match(/#(.*?)([?]|$)/) ? window.location.hash.match(/#(.*?)([?]|$)/)[1] : '/';
+        const gitalk = new Gitalk({
+                clientID: 'e2d9373686ddde33c028',
+                clientSecret: '5fc846aba5324db60015c9cdb6e2d641a3477b37',
+                repo: 'Notes',
+                owner: 'Kizai',
+                admin: ['Kizai'],
+                title: decodeURI(window.title_id),
+                // facebook-like distraction free mode
+                distractionFreeMode: false,
+                id: md5(window.location.hash), // 页面的唯一标识，gitalk 会根据这个标识自动创建的issue的标签,我们使用页面的相对路径作为标识
+                enableHotKey: true, // 提交评论快捷键(cmd/ctrl + enter)
+            })
+            // 监听URL中hash的变化，如果发现换了一个MD文件，那么刷新页面，解决整个网站使用一个gitalk评论issues的问题。
+        window.onhashchange = function(event) {
+            if (event.newURL.split('?')[0] !== event.oldURL.split('?')[0]) {
+                location.reload()
+            }
+        }
+    </script>
+
+    <!-- 点击页面出现爱心 -->
+    <script src="//cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/js/click_heart.js"></script>
 </body>
 
 </html>
