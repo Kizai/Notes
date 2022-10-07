@@ -8,6 +8,12 @@
 - [Docker开发指南](Books/Docker开发指南.md)
 - [Docker技术入门与实战](Books/Docker技术入门与实战.md)
 - [Redis设计与实现](Books/Redis设计与实现.md)
+- [MySQL必知必会（文字版）](Books/MySQL必知必会（文字版）.md)
+- [PostgreSQL查询引擎源码技术探析_by_李浩](Books/PostgreSQL查询引擎源码技术探析_by_李浩_z_lib_org.md)
+- [TCP_IP详解卷2_实现](Books/TCP_IP详解卷2_实现.md)
+- [操作系统-第三版](Books/操作系统-第三版.md)
+- [深入浅出 Rust by 范长春 (z-lib.org)](Books/深入浅出%20Rust%20by%20范长春%20(z-lib.org).md)
+- [用Python进行自然语言处理](Books/用Python进行自然语言处理.md)
 
 ## CCNA
 
