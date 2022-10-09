@@ -14,6 +14,7 @@
 - [操作系统-第三版](Books/操作系统-第三版.md)
 - [深入浅出 Rust by 范长春 (z-lib.org)](Books/深入浅出%20Rust%20by%20范长春%20(z-lib.org).md)
 - [用Python进行自然语言处理](Books/用Python进行自然语言处理.md)
+- [CleanCode(代码整洁之道-中文完整版-带书签)](Books/CleanCode(代码整洁之道-中文完整版-带书签).md)
 
 ## CCNA
 
