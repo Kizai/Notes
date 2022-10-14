@@ -16,6 +16,15 @@
 - [用Python进行自然语言处理](Books/用Python进行自然语言处理.md)
 - [CleanCode(代码整洁之道-中文完整版-带书签)](Books/CleanCode(代码整洁之道-中文完整版-带书签).md)
 
+
+## Android
+
+- [Android集成百度语音识别到HelloWorld需要注意什么](Android/Android集成百度语音识别到HelloWorld需要注意什么?.md)
+- [ESP8266安卓TCP客户端开发（含全部源码）](Android/ESP8266安卓TCP客户端开发（含全部源码）.md)
+- [20BMI体质指数测试项目完整版](Android/安卓android-BMI体质指数测试项目完整版.md)
+- [安卓通过SQLite实现登录注册功能（小白式教程）](Android/安卓通过SQLite实现登录注册功能（小白式教程）.md)
+- [手把手教你写出第一个鸿蒙程序](Android/手把手教你写出第一个鸿蒙(HarmonyOS)程序.md)
+
 ## CCNA
 
 - [课堂1笔记](CCNA/Class01.md)
@@ -23,6 +32,10 @@
 - [课堂3笔记](CCNA/Class04.md)
 - [课堂4笔记](CCNA/Class05.md)
 
+
+## CICD
+
+- [CD部署C++helloworld项目](CICD/CICD部署C++helloworld项目.md) 
 
 ## Docker
 
@@ -40,13 +53,23 @@
 - [Tmux 用法](Linux/Tmux_Notes.md)
 - [Linux安装虚拟机](Linux/Ubuntu_Install_VirtualBox.md)
 - [Linux网络命令用法](Linux/Wget-Curl-Lwp_request_Command.md)
+- [Hexo博客部署到阿里云ECS服务器(Ubuntu%2020.04)和域名解析](Linux/Hexo博客部署到阿里云ECS服务器(Ubuntu20.04)和域名解析.md)
+- [Shell使用getoopts处理多参数的例程](Linux/Shell使用getoopts处理多参数的例程.md)
 
 ## Python
 
 - [Python logging 用法介绍](Pyhton/Logging_User.md)
 - [Pytest测试框架用法](Pyhton/Pytest_Usage.md)
 - [Ubuntu 安装 pyenv](Pyhton/Ubuntu_Install_Pyenv.md)
+- [Python_RESTful_API](Python/Python_RESTful_API.md)
+- [用Python写一个学生成绩管理系统](Python/用Python写一个学生成绩管理系统.md)
 
+## Question_Notes
+
+- [ModelSim10.5安装失败总结.](Question_Notes/ModelSim10.5安装失败总结.md)
+- [PHP脚本执行Python问题总结](Question_Notes/PHP脚本执行Python问题总结.md)
+- [Ubuntu包管理器出错解决方法](Question_Notes/Ubuntu包管理器出错解决方法.md)
+- [解决pip%20ssl不可用的问题](Question_Notes/解决pipssl不可用的问题.md)
 
 ## Tools
 
