@@ -19,7 +19,7 @@
 
 ## Android
 
-- [Android集成百度语音识别到HelloWorld需要注意什么](Android/Android集成百度语音识别到HelloWorld需要注意什么?.md)
+- [安卓语言识别](Android/安卓语言识别.md)
 - [ESP8266安卓TCP客户端开发（含全部源码）](Android/ESP8266安卓TCP客户端开发（含全部源码）.md)
 - [20BMI体质指数测试项目完整版](Android/安卓android-BMI体质指数测试项目完整版.md)
 - [安卓通过SQLite实现登录注册功能（小白式教程）](Android/安卓通过SQLite实现登录注册功能（小白式教程）.md)
@@ -58,7 +58,7 @@
 
 ## Python
 
-- [Python logging 用法介绍](Pyhton/Logging_User.md)
+- [Python logging用法介绍](Python/Logging_User.md)
 - [Pytest测试框架用法](Pyhton/Pytest_Usage.md)
 - [Ubuntu 安装 pyenv](Pyhton/Ubuntu_Install_Pyenv.md)
 - [Python_RESTful_API](Python/Python_RESTful_API.md)
