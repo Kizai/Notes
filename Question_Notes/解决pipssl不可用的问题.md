@@ -38,4 +38,4 @@ $ sudo ln -s /opt/python3/bin/python3 /usr/bin/python3
 # 更新pip3
 $ python3 -m pip install --upgrade pip
 ```
-看不懂指令的有注释说明！觉得有用麻烦一键三连！！！谢谢！
+

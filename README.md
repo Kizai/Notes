@@ -60,7 +60,7 @@
 
 - [Python logging用法介绍](Python/Logging_User.md)
 - [Pytest测试框架用法](Pyhton/Pytest_Usage.md)
-- [Ubuntu 安装 pyenv](Pyhton/Ubuntu_Install_Pyenv.md)
+- [Ubuntu安装pyenv](Pyhton/Ubuntu_Install_Pyenv.md)
 - [Python_RESTful_API](Python/Python_RESTful_API.md)
 - [用Python写一个学生成绩管理系统](Python/用Python写一个学生成绩管理系统.md)
 
