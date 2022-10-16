@@ -1,18 +1,24 @@
-## ESP8266安卓TCP客户端开发
+# ESP8266安卓TCP客户端开发
+
 最近在玩8266模块，想让它在局域网控制下开关，所以就搞开发一个安卓客户端调试的工具
+
 直接上步骤：
 ### 第一步新建一个空白的Activity
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702130122671.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 工程名字自己可以改
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702130158997.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ### 第二先在AndroidManifest.xml加入网络权限
 
-```javascript
+```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 ### 第三修改界面布局（注意这个布局必须要支持约束布局才能正常使用不然会报错，可以使用AS3.6以上版本）：
 
-```javascript
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -449,13 +455,23 @@ void blink()
 }
 ```
 8266端口监视器：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702133906604.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ### 第七现在运行软件（真机和虚拟机都可以实现连接：前提是连接在统一个局域网里面）
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702134104569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
-也可以看到串口监视器会有反应：New client:0o
+
+也可以看到串口监视器会有反应：```New client:0o```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702134133928.png)
+
 测试发送数据：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702134235689.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200702134312593.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 看到串口监视器都是可以接收到数据的
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020070213432565.png)

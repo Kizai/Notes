@@ -821,13 +821,16 @@ $ docker image inspect redis:latest
 
 ### 如何提交一个自己的镜像
 **commit 镜像**
+
 ```shell
 $ docker commit 提交容器成为一个新的副本
 
 # 命令跟git原理类似
 $ docker commit -m="提交的描述信息" -a="作者" 容器id 目标镜像名:[TAG]
 ```
-* 实战测试
+
+实战测试
+
 ```shell
 $ docker images
 REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
@@ -842,8 +845,7 @@ centos            latest    5d0da3dc9764   8 months ago   231MB
 # 启动httpd服务
 $ docker run -it -p 8088:80 --name apache-tt -d httpd
 d0f5368beceec8596197b734ff6be012b26eee32b3dae20df2a07ef17525e9a1
-# 
-查看启动状态
+# 查看启动状态
 $ docker ps
 CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS             PORTS                                       NAMES
 d0f5368becee   httpd             "httpd-foreground"       33 seconds ago   Up 31 seconds      0.0.0.0:8088->80/tcp, :::8088->80/tcp       apache-tt
@@ -888,11 +890,12 @@ sha256:5ef56fce7bbbf2ad631214cc6e78ae497ce466b8fac50ec1b0b1550535f96f5e
 $ docker images
 REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
 httpd-test        0.0.1     5ef56fce7bbb   25 seconds ago   199MB
+
 ```
 
 ![](https://s2.loli.net/2022/06/12/C7wn59DvUPYzAgZ.png)
 
-* 如果想要保存当前容器的状态，就可以通过commit来提交获得一个镜像。
+如果想要保存当前容器的状态，就可以通过commit来提交获得一个镜像。
 
 ![](https://s2.loli.net/2022/06/12/XGO4jyH1DtI3Ura.png)
 
@@ -1228,8 +1231,8 @@ $ docker inspect b7d2b3ee3d32
 好处：以后修改只需要在本都修改即可，容器内会自动同步。
 
 ### 实战：安装MySQL
-* 思考：数据持久化的问题
-```shell
+思考：数据持久化的问题 
+```powershell
 # 获取镜像
 $ docker pull mysql:5.7
 
@@ -1244,21 +1247,23 @@ $ docker run -d -p 3310:3306 -v /home/lemu-devops/Docker_Project/share/mysql/con
 
 # 启动成功之后使用，mysql插件来测试一下
 # mysql插件链接到服务器的3310 --- 3310和容器内的3306映射，这个时候就可以连上了
+
 ```
 
 ![](https://s2.loli.net/2022/06/12/wvJN6fzp7SFEo8H.png)
 
-* 挂载文件成功的实例
+挂载文件成功的实例
 
 ![](https://s2.loli.net/2022/06/12/zmcGweRKso48pCh.png)
 
-* 删除mysql容器查看主机的文件是否会删除呢？
+删除mysql容器查看主机的文件是否会删除呢？
 
 ![](https://s2.loli.net/2022/06/12/Sslmh2ugzYqQoJO.png) 
 
 * 发现，我们挂载到本地的数据依旧没有丢失，这就实现了容器数据持久化的功能。
 
 #### 具名和匿名挂载
+
 ```shell
 # 匿名挂载
 -v 容器内路径
@@ -1309,9 +1314,12 @@ _data
 root@lemudevops:/var/lib/docker/volumes/juming-apache# cd _data/
 root@lemudevops:/var/lib/docker/volumes/juming-apache/_data# ls
 bin  build  cgi-bin  conf  error  htdocs  icons  include  logs  modules
+
 ```
-* 所有docker容器的卷，没有指定目录的情况下都是在 `/var/lib/docker/volumes/xxx/_data` 路径下
-* 我们通过具名挂载可以方便的找到我们的一个卷，大多数情况都是使用`具名挂载`。
+
+所有docker容器的卷，没有指定目录的情况下都是在 `/var/lib/docker/volumes/xxx/_data` 路径下
+
+我们通过具名挂载可以方便的找到我们的一个卷，大多数情况都是使用`具名挂载`。
 
 ```shell
 # 如何确定是具名挂载还是匿名挂载，还是指定路径挂载
@@ -1319,7 +1327,9 @@ bin  build  cgi-bin  conf  error  htdocs  icons  include  logs  modules
 -v 卷名:容器内路径         # 具名挂载
 -v /宿主机路径:/容器内路径  # 指定路径挂载
 ```
-* 拓展
+
+拓展
+
 ```shell
 ro      readonly    # 只读
 rw      readwrite   # 可读可写
@@ -1329,9 +1339,13 @@ $ docker run -d -P --name htppd04 -v juming-apache:/usr/local/apache2:ro httpd
 $ docker run -d -P --name htppd04 -v juming-apache:/usr/local/apache2:rw httpd
 
 # ro 只要看到ro就说明这个路径只能通过宿主机来操作，容器内部是无法操作的！！！
+
 ```
-* Dockerfile就是用来构建docker镜像的构建文件！命令脚本！
-* 通过这个脚本可以生成镜像，镜像是一层一层的，脚本一个个的命令，每个命令都是一层。
+
+Dockerfile就是用来构建docker镜像的构建文件！命令脚本！
+
+通过这个脚本可以生成镜像，镜像是一层一层的，脚本一个个的命令，每个命令都是一层。
+
 ```shell
 # 创建一个dockerfile文件，名字可以随机，建议使用Dockerfile
 # 文件内容指令(大写) 参数
@@ -1348,11 +1362,13 @@ CMD /bin/bash
 # 保存退出
 # 构建镜像
 $ docker build -f dockerfile1 -t kizai/centos .
+
 ```
+
 ![](https://s2.loli.net/2022/06/13/BMbOXSYvV8juNdf.png)
 
 ### 数据卷容器
- * 多个mysql同步数据
+多个mysql同步数据
 
 ![](https://s2.loli.net/2022/06/13/nTyNdXYaVL9u7RD.png)
 
@@ -1360,45 +1376,53 @@ $ docker build -f dockerfile1 -t kizai/centos .
 # 启动3个容器，通过自己写的镜像启动
 
 ```
+
 ![](https://s2.loli.net/2022/06/13/AULRn3jqYSD9crv.png)
-* 启动自定义的容器
+
+启动自定义的容器
+
 ```shell
 $ docker run -it b0248e10a05e /bin/bash
 ```
+
 ![](https://s2.loli.net/2022/06/13/o5hmJSwcr6K12F3.png)
 
-* 这个卷的外部一定有一个同步的目录
+这个卷的外部一定有一个同步的目录
 
 ![](https://s2.loli.net/2022/06/13/lmyktKOe92VG8pu.png)
 
-* 查看卷挂载的路径
+查看卷挂载的路径
 
 ![](https://s2.loli.net/2022/06/13/KLU4eP1ME5Xyo7g.png)
 
-* 测试一下文件是否同步过去了
+测试一下文件是否同步过去了
 
 ![](https://s2.loli.net/2022/06/13/4TFAsOt39ZPuJQy.png)
 
-* 假设构建镜像时没有挂载卷，要手动镜像挂载 `-v 卷名:容器内路径`
+假设构建镜像时没有挂载卷，要手动镜像挂载 `-v 卷名:容器内路径`
 
-* 启动第docker02数据卷继承于docker01，在这里docker01就叫做数据卷容器。
+启动第docker02数据卷继承于docker01，在这里docker01就叫做数据卷容器。
+
 ```shell
 $ docker run -it --name docker02 --volumes-from docker01 b0248e10a05e
 ```
-* docker01创建的数据同步到docker02上
+
+docker01创建的数据同步到docker02上
   
 ![](https://s2.loli.net/2022/06/13/gu32LdpEONAb1I5.png)
 
-* 启动docker03数据卷继承于docker01
+启动docker03数据卷继承于docker01
 
 ![](https://s2.loli.net/2022/06/13/W2ewhcRMsf6EFJT.png)
 
-* 测试：可以删除docker01,查看docker02和docker03是否可以访问这个文件？
-  * 经过测试：删除docker01后，docker02和docker03一样是可以访问文件的。
+测试：可以删除docker01,查看docker02和docker03是否可以访问这个文件？
+
+经过测试：删除docker01后，docker02和docker03一样是可以访问文件的。
 
 ![](https://s2.loli.net/2022/06/13/QBz3wqySsZOthvF.png)
 
-* 多个mysql实现数据共享
+多个mysql实现数据共享
+
 ```shell
 # 启动mysql01
 $ docker run -d -p 3310:3306 -v /etc/mysql/conf.d -v /var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7
@@ -1448,6 +1472,7 @@ Docker镜像逐渐成为企业交互的标准！
 3. Docker容器：容器就是镜像运行起来提供服务器
 
 ### DockerFile的指令
+
 ```dockerfile
 FROM            # 基础镜像
 MAINTAINER      # 镜像谁写的，姓名+邮箱
@@ -1468,7 +1493,8 @@ ENV             # 构建的时候设置环境变量
 ### 实战测试
 Docker Hub中99%镜像都是从这个基础镜像过来的`FROM scratch`,然后配置需要的软件和配置来进行构建。
 
-* 创建一个自己的centos
+创建一个自己的centos
+
 ```dockerfile
 
 # 1.编写dockerfile文件
@@ -1492,14 +1518,18 @@ Successfully tagged mycentos:0.1
 
 # 测试运行
 ```
+
 ![](https://s2.loli.net/2022/06/13/FkLwYxv3UVT6fPe.png)
 
 ### CMD 和 ENTRYOINT 的区别
+
 ```shell
 CMD             # 指定这个容器启动的时候运行的命令，只有最后一个会生效，可以被替代
 ENTRYPOINT      # 指定这个容器启动的时候要运行的命令，可以追加命令
 ```
+
 测试CDM
+
 ```shell
 # 编写dockerfile文件
 $ vim dockerfile-cmd-test
@@ -1527,7 +1557,9 @@ docker: Error response from daemon: failed to create shim task: OCI runtime crea
 
 # cmd的命令下 -l 替换了CMD ["ls","-a"] 命令，-l 不是命令所以报错！
 ```
+
 测试ENTRYPOINT
+
 ```shell
 $ vim dockerfile-cmd-entrypoint
 FROM centos
@@ -1611,16 +1643,17 @@ drwxrwxrwt   7 root root 4096 Sep 15  2021 tmp
 drwxr-xr-x  12 root root 4096 Sep 15  2021 usr
 drwxr-xr-x  20 root root 4096 Sep 15  2021 var
 ```
+
 Dockerfile中很多命令都十分相似，我们需要了解他们的区别，最后的方法就是做对比测试。
 
 ### 小结
 
 ![](https://s2.loli.net/2022/06/13/1gATCi5uIzPmdn2.png)
 
-
 ## Docker网络
 ### 理解Docker0
 清空所有的容器和镜像
+
 ```shell
 # 删除所有容器
 $ docker rm -f $(docker ps -aq)
@@ -1628,6 +1661,7 @@ $ docker rm -f $(docker ps -aq)
 # 删除所有镜像
 $ docker image rm -f $(docker image -aq)
 ```
+
 ![](https://s2.loli.net/2022/06/14/MO29NblDeQdjT5w.png)
 
 * 回环地址：不属于任何一个有类别地址类。它代表设备的本地虚拟接口，所以默认被看作是永远不会宕掉的接口,一般都会用来检查本地网络协议、基本数据接口等是否正常的。
@@ -1638,15 +1672,18 @@ $ docker image rm -f $(docker image -aq)
 * enp1s0: 为什么是 enp1s0 而不是 eth0?
   * 新的命名方案被称为"可预测的网络接口Predictable Network Interface"。 它已经在基于systemd 的 Linux 系统上使用了一段时间了。 接口名称取决于硬件的物理位置。 `en` 仅仅就是 `ethernet` 的意思，就像`eth` 用于对应 `eth0`一样。 `p` 是以太网卡的总线编号，`s` 是插槽编号。 所以`enp1s0`告诉我们很多我们正在使用的硬件的信息。
   * 使用状态
-  ```shell
-    # BROADCAST   该接口支持广播
-    # MULTICAST   该接口支持多播
-    # UP          网络接口已启用
-    # LOWER_UP    网络电缆已插入，设备已连接至网络
-    # DOWN        网络接口已关闭
-    # UNKNOWN     暂不知道网络接口的状态
-  ```
-* 其他命令解释：
+
+```shell
+  # BROADCAST   该接口支持广播
+  # MULTICAST   该接口支持多播
+  # UP          网络接口已启用
+  # LOWER_UP    网络电缆已插入，设备已连接至网络
+  # DOWN        网络接口已关闭
+  # UNKNOWN     暂不知道网络接口的状态
+```
+
+其他命令解释：
+
 ```shell
 mtu 1500                                    最大传输单位（数据包大小）为1,500字节
 qdisc pfifo_fast                            用于数据包排队
@@ -1668,7 +1705,8 @@ preferred_lft forever                       IPv6 地址的首选生存期
 ```
 
 #### docker重启自动运行的原理？怎么让它自动运行？
-* 原理：Docker 容器的自动重启是由 Docker 守护进程完成的。
+原理：Docker 容器的自动重启是由 Docker 守护进程完成的。
+
 ```shell
 # 运行命令：
 $ docker run -i -t -d --name dockername --restart=always imageId
@@ -1680,6 +1718,7 @@ on-failure:n            # 在容器非正常退出时重启容器，并且指定
 always                  # 始终重启
 unless-stopped          # 在容器退出时总是重启容器，但是 Docker 守护进程启动之前就已经停止运行的容器不算在内。
 ```
+
 * 容器启动时忘记使用 `--restart=always` 如何补救
     1. 使用 `update` 命令
     ```shell
@@ -1740,6 +1779,7 @@ AUFS 是联合文件系统，意味着它在主机上使用多层目录存储，
 
 
 ####  docker引擎的log是在什么位置？
+
 ```shell
 $ journalctl -u docker.service
 -- Logs begin at Fri 2022-04-22 15:14:03 CST, end at Wed 2022-06-15 00:34:32 CST. --
@@ -1772,9 +1812,11 @@ $ journalctl -u docker.service
 ```
 
 三个网络
+
 ```shell
 # 问题:docker 是如何处理处理容器网络访问的？
 ```
+
 ![](https://s2.loli.net/2022/06/14/giv6ulUTnpwqPzJ.png)
 
 ```shell

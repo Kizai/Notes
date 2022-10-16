@@ -1,12 +1,13 @@
-## 一、 界面布局：
+# 安卓android-BMI体质指数测试项目完整版
+
+### 一、 界面布局：
 
 （1）、 主界面：
-如下图1所示:
+
 ![主界面](https://img-blog.csdnimg.cn/20200425151336260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
 
 
-图1-主界面
-Activity_main.xml源代码：
+**Activity_main.xml源代码：**
 
 ```bash
 <?xml version="1.0" encoding="utf-8"?>
@@ -295,9 +296,10 @@ Activity_main.xml源代码：
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 （2）、测试结果界面：
-如下图2所示
+
 ![测试结果界面](https://img-blog.csdnimg.cn/20200425151619128.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
-Activity_bmiresult.xml源代码：
+
+**Activity_bmiresult.xml源代码：**
 
 ```bash
 <?xml version="1.0" encoding="utf-8"?>
@@ -455,8 +457,11 @@ Activity_bmiresult.xml源代码：
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
+
 （3）、按钮自定义形状
-Shape.xml源代码：
+
+**Shape.xml源代码：**
+
 ```bash
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
@@ -475,9 +480,10 @@ Shape.xml源代码：
 
  
 (4) 、自定义Dialog样式
-如下图4所示：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020042515191165.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
-Aboutme.xml源代码：
+
+**Aboutme.xml源代码：**
 
 ```bash
 <?xml version="1.0" encoding="utf-8"?>
@@ -713,11 +719,12 @@ Aboutme.xml源代码：
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 （5）、自定义Toast
+
 ![toast](https://img-blog.csdnimg.cn/20200425152029781.png#pic_center)
-图5-Toast样式
+
+**Diy_toast.xml源代码：**
 
 ```bash
-Diy_toast.xml源代码：
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -762,12 +769,10 @@ Diy_toast.xml源代码：
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
-
-
-
  
-二、	第三方框架：
-（1）、Gifimages动态图片显示框架
+### 二、第三方框架：
+
+#### （1）、Gifimages动态图片显示框架
 1、首先在build.grade(Project)中添加：
 
 ```bash
@@ -820,9 +825,10 @@ dependencies {
 ```bash
 ToastEx.error(MainActivity.this,"体重不能为0").show();
 ```
-##第一界面
-一、	逻辑代码：
-（1）、MainActivity.java源代码：
+### 第一界面
+一、逻辑代码：
+
+**MainActivity.java源代码：**
 
 ```bash
 package com.example.bmitest;
@@ -1056,8 +1062,9 @@ public class MainActivity extends AppCompatActivity {
 
 }
 ```
-##第二界面源代码
-（2）、BmiresultActivity.java源代码：
+### 第二界面源代码
+
+**BmiresultActivity.java源代码：**
 
 ```bash
 package com.example.bmitest;
@@ -1203,11 +1210,16 @@ public class BmiresultActivity extends AppCompatActivity {
     }
 }
 ```
-#演示效果
+### 演示效果
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200425152814235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200425152814211.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200425152814178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200425152813867.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200425152813870.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70)
 
 > 本项目已经开源：

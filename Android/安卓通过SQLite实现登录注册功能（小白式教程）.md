@@ -1,20 +1,30 @@
-## 安卓通过SQLlite实现登录注册功能
+# 安卓通过SQLlite实现登录注册功能
 
-## 前面基本操作看图片
+### 前面基本操作看图片
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182507420.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182609963.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182616305.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182627235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182649612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182703541.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182710912.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182800135.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021182942674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183025193.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183034322.png#pic_center)
 
-## 第一个xml文件是：round_bg.xml，后面界面布局要用到
+### 第一个xml文件是：round_bg.xml，后面界面布局要用到
 
 ```bash
 <?xml version="1.0" encoding="utf-8"?>
@@ -23,9 +33,10 @@
     <corners android:radius="100dp"/>
 </shape>
 ```
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183400381.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
 
-## 第二个xml文件是：round_border.xml
+### 第二个xml文件是：round_border.xml
 
 ```bash
 <?xml version="1.0" encoding="utf-8"?>
@@ -36,9 +47,10 @@
 </shape>
 ```
 
-## 修改下系统颜色
+### 修改下系统颜色
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183555527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 改为：
 
 ```bash
@@ -50,21 +62,31 @@
 </resources>
 
 ```
-现在开始添加图标：
+
+### 现在开始添加图标：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183718831.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183820598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183827373.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183836313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183842520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
 
-## 其他的图标如下图，命名方法看个人习惯
+### 其他的图标如下图，命名方法看个人习惯
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183923788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183928589.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183952130.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021183959328.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
-可以参考我的命名方法，不要改太多就行。
+
+### 可以参考我的命名方法，不要改太多就行。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021184059823.png#pic_center)
 
 ## 开始登录界面的布局：打开activity_login.xml
@@ -220,7 +242,7 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-## 注册界面的布局：打开activity_registered.xml
+### 注册界面的布局：打开activity_registered.xml
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021184532248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
 
@@ -409,9 +431,11 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-## 界面布局完成，开始来正事。
+### 界面布局完成，开始来正事。
 #### 新建两个工具类
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021184903507.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021185039368.png#pic_center)
 #### 按确定就能添加：打开DBOpenHelper.class,不懂看注释！
 
@@ -851,7 +875,10 @@ public class RegisteredActivity extends AppCompatActivity implements View.OnClic
 }
 ```
 #### 做到这里别以为完事了，还要设置打开应用第一个显示的界面
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021190043728.png#pic_center)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021190401425.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDAxMTYz,size_16,color_FFFFFF,t_70#pic_center)
-##  抄到这里应该是运行能直接运行成功的，第一次要注册完才能登录。
+###  抄到这里应该是运行能直接运行成功的，第一次要注册完才能登录。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201021194335421.gif#pic_center)
