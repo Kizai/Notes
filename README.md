@@ -17,6 +17,10 @@
 - [CleanCode(代码整洁之道-中文完整版-带书签)](Books/CleanCode(代码整洁之道-中文完整版-带书签).md)
 - [操作系统知识点](Books/操作系统知识点.md)
 - [计算机基础](Books/计算机基础.md)
+- [](Books/流畅的python.md)
+- [Go_语言实战_by_威廉·肯尼迪_William_Kennedy_布赖恩·克特森_Brian_Ketelsen_埃里克·圣马丁](Books/Go_语言实战_by_威廉·肯尼迪_William_Kennedy_布赖恩·克特森_Brian_Ketelsen_埃里克·圣马丁.md)
+- [Go源码剖析](Books/Go源码剖析.md)
+- [Go网络编程](Books/Go网络编程.md)
 
 
 ## Android
