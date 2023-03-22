@@ -89,3 +89,4 @@
 ## SQL
 
 - [Ubuntu完全卸载PostgresQL](SQL/Ubuntu完全卸载PostgresQL.md)
+- [Ubuntu安装Postgresql并远程访问](SQL/Ubuntu安装Postgresql并远程访问.md)
