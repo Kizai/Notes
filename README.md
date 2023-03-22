@@ -85,3 +85,7 @@
 ## Redis
 
 - [Redis学习笔记](Redis/Redis_Study_Note.md)
+
+## SQL
+
+- [Ubuntu完全卸载PostgresQL](SQL/Ubuntu完全卸载PostgresQL.md)
