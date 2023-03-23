@@ -528,3 +528,4 @@ WHERE
 ![](https://s2.loli.net/2023/03/22/hSqsJrpewUv4OtX.png)
 
 以上是使用 Promscale 存储 Prometheus 的指标数据到 psql。
+
