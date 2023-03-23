@@ -317,6 +317,7 @@ WantedBy=multi-user.target
 
 #启动prometheus
 sudo systemctl daemon-reload 
+sudo systemctl enable prometheus.service 
 sudo systemctl start prometheus.service 
 sudo systemctl status prometheus.service
 ```
@@ -345,6 +346,7 @@ WantedBy=multi-user.target
 
 # 启动node_exporter
 sudo systemctl daemon-reload 
+sudo systemctl enable node_exporter.service 
 sudo systemctl start node_exporter.service 
 sudo systemctl status node_exporter.service 
 ```
@@ -374,6 +376,7 @@ WantedBy=multi-user.target
 
 # 启动grafana
 sudo systemctl daemon-reload 
+sudo systemctl enable grafana.service
 sudo systemctl start grafana.service
 sudo systemctl status grafana.service 
 
