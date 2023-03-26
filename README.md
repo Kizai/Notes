@@ -21,6 +21,10 @@
 - [Go_语言实战_by_威廉·肯尼迪_William_Kennedy_布赖恩·克特森_Brian_Ketelsen_埃里克·圣马丁](Books/Go_语言实战_by_威廉·肯尼迪_William_Kennedy_布赖恩·克特森_Brian_Ketelsen_埃里克·圣马丁.md)
 - [Go源码剖析](Books/Go源码剖析.md)
 - [Go网络编程](Books/Go网络编程.md)
+- [Go_Web编程](Books/Go_Web编程.md)
+- [Go语言编程](Books/Go语言编程.md)
+- [Go语言标准库](Books/Go语言标准库.md)
+- [Go语言高级编程bychai2010](Books/Go语言高级编程bychai2010.md)
 - [Python-Web开发：测试驱动方法](Books/Python-Web开发：测试驱动方法.md)
 - [SQL基础教程](Books/SQL基础教程.md)
 
