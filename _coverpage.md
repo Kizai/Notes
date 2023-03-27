@@ -1,6 +1,6 @@
 <img src=https://s2.loli.net/2022/06/21/yReguM1xfJcklIE.png width=10% height=10% />
 
-#  Kizai
+#  Kizai's 藏宝阁
 * stay hungry , stay foolish .
 
 [Github](https://github.com/Kizai/Notes)
