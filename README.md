@@ -23,6 +23,7 @@
 - [Go网络编程](Books/Go网络编程.md)
 - [Go_Web编程](Books/Go_Web编程.md)
 - [Go语言编程](Books/Go语言编程.md)
+- [Go语言中文文档](Books/Go语言中文文档.md)
 - [Go语言标准库](Books/Go语言标准库.md)
 - [Go语言高级编程bychai2010](Books/Go语言高级编程bychai2010.md)
 - [Python-Web开发：测试驱动方法](Books/Python-Web开发：测试驱动方法.md)
