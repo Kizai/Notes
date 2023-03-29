@@ -2,8 +2,9 @@
 
 * [<span class="iconfont icon-icon_fabu"></span> 导航](README.md)
 
-  * [Books](README?id=Books)
+ 
   * [Android](README?id=Android)
+  * [Books](README?id=Books)
   * [CCNA](README?id=CCNA)
   * [CICD](README?id=CICD)
   * [Docker](README?id=Docker)
@@ -11,6 +12,8 @@
   * [Python](README?id=Python)
   * [Question_Notes](README?id=Question_Notes)
   * [Redis](README?id=Redis)
+  * [SQL](README?id=SQL)
   * [Tools](README?id=Tools)
+  * [集群](README?id=集群)
 
 * [<span class="iconfont icon-github1"></span> GitHub](https://github.com/Kizai/Notes)
